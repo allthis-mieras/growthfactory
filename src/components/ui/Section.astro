@@ -2,6 +2,8 @@
 export interface Props {
   padding?: "sm" | "md" | "lg" | "xl";
   background?: "default" | "secondary" | "tertiary";
+  backgroundImage?: string;
+  gradientVariant?: "default" | "hero" | "cta" | "dark" | "light";
   class?: string;
   id?: string;
 }
@@ -9,6 +11,8 @@ export interface Props {
 const {
   padding = "lg",
   background = "default",
+  backgroundImage,
+  gradientVariant = "default",
   class: className = "",
   id,
 } = Astro.props;
@@ -17,13 +21,69 @@ const classes =
   `section section--${padding} section--${background} ${className}`.trim();
 ---
 
-<section class={classes} id={id}>
-  <slot />
+<section
+  class={classes}
+  id={id}
+  style={backgroundImage
+    ? `background-image: url(${backgroundImage}); background-size: cover; background-position: center; background-repeat: no-repeat;`
+    : ""}
+>
+  {
+    backgroundImage && (
+      <div class={`section__overlay section__overlay--${gradientVariant}`} />
+    )
+  }
+  <div class="section__content">
+    <slot />
+  </div>
 </section>
 
 <style>
   .section {
     width: 100%;
+    position: relative;
+  }
+
+  .section__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  /* Simple left-to-right gradient - automatically adapts to theme */
+  .section__overlay--default,
+  .section__overlay--hero,
+  .section__overlay--cta,
+  .section__overlay--light,
+  .section__overlay--dark {
+    background: linear-gradient(
+      to right,
+      var(--color-bg) 0%,
+      rgba(255, 255, 255, 0.3) 100%
+    );
+  }
+
+  /* Dark mode specific gradient */
+  @media (prefers-color-scheme: dark) {
+    .section__overlay--default,
+    .section__overlay--hero,
+    .section__overlay--cta,
+    .section__overlay--light,
+    .section__overlay--dark {
+      background: linear-gradient(
+        to right,
+        var(--color-bg) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+    }
+  }
+
+  .section__content {
+    position: relative;
+    z-index: 1;
   }
 
   /* Padding variants */

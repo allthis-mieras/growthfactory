@@ -48,7 +48,7 @@ const {
                   {field.required && <span class="contact__required">*</span>}
                 </label>
                 <input
-                  type={field.type}
+                  type={field.type as any}
                   id={field.name}
                   name={field.name}
                   class="contact__input"
@@ -76,7 +76,7 @@ const {
                 />
               ) : (
                 <input
-                  type={field.type}
+                  type={field.type as any}
                   id={field.name}
                   name={field.name}
                   class="contact__input"

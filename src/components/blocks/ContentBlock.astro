@@ -44,7 +44,7 @@ const imageProps = image
                   <Tag
                     class={`content__paragraph content__paragraph--${block.style || "normal"}`}
                   >
-                    {block.children?.map((child) => {
+                    {block.children?.map((child: any) => {
                       if (child._type === "span") {
                         if (child.marks?.includes("strong")) {
                           return <strong>{child.text}</strong>;

@@ -2,6 +2,7 @@
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import Section from "../ui/Section.astro";
+import { Image } from "astro:assets";
 import { getSanityImageProps } from "../../lib/sanity/image";
 
 export interface Props {
@@ -34,7 +35,7 @@ const {
 } = block;
 
 const imageProps = image
-  ? getSanityImageProps(image, { width: 600, height: 400 })
+  ? getSanityImageProps(image, { width: 400, height: 400 })
   : null;
 ---
 
@@ -81,12 +82,14 @@ const imageProps = image
         {
           imageProps && (
             <div class="list-block__image">
-              <img
+              <Image
                 src={imageProps.src}
                 alt={imageProps.alt}
-                width={imageProps.width}
-                height={imageProps.height}
+                width={400}
+                height={400}
                 class="list-block__img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           )
@@ -238,9 +241,11 @@ const imageProps = image
   }
 
   .list-block__img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -282,6 +287,10 @@ const imageProps = image
 
     .list-block__title {
       font-size: var(--step-4);
+    }
+
+    .list-block__img {
+      max-width: 300px;
     }
   }
 </style>

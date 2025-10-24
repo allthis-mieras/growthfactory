@@ -38,10 +38,9 @@ const backgroundImageProps = backgroundImage
 
 <Section
   padding="xl"
-  background={backgroundStyle === "image" ? "image" : "default"}
-  style={backgroundImageProps
-    ? `background-image: url(${backgroundImageProps.src})`
-    : ""}
+  background="default"
+  backgroundImage={backgroundImageProps?.src}
+  gradientVariant={backgroundImage ? "cta" : "default"}
 >
   <Container>
     <div class={`cta cta--${backgroundStyle}`}>
