@@ -62,7 +62,15 @@ npx sanity init --project-id [YOUR_PROJECT_ID] --dataset production
 npx sanity deploy
 ```
 
-### 2. Environment Variables
+### 2. Sanity Project ID Ophalen
+
+Je Sanity Project ID kun je vinden in:
+
+1. **Sanity Dashboard:** Ga naar [sanity.io/manage](https://sanity.io/manage)
+2. **In je Studio:** Het staat in `studio/sanity.config.ts` (regel 12)
+3. **Via CLI:** `npx sanity projects list`
+
+### 3. Environment Variables
 
 Maak een `.env` bestand aan in de root directory:
 
@@ -71,7 +79,9 @@ SANITY_PROJECT_ID=your_project_id_here
 SANITY_DATASET=production
 ```
 
-### 3. Studio Starten
+**Let op:** Voeg `.env` toe aan je `.gitignore` (dit is al gedaan) om te voorkomen dat gevoelige informatie in je repository komt.
+
+### 4. Studio Starten
 
 ```bash
 # Studio development server
@@ -168,15 +178,53 @@ npm run studio:deploy
 
 Zorg ervoor dat de volgende environment variables zijn ingesteld in je hosting platform:
 
-- `SANITY_PROJECT_ID`
-- `SANITY_DATASET`
+- `SANITY_PROJECT_ID` - Je Sanity project ID
+- `SANITY_DATASET` - Je Sanity dataset (meestal 'production')
 
-### Hosting
+### Netlify Deployment
 
-Dit project kan gehost worden op:
-- [Netlify](https://netlify.com/)
-- [Vercel](https://vercel.com/)
-- [GitHub Pages](https://pages.github.com/)
+#### 1. Repository Koppelen
+
+1. Ga naar [Netlify](https://netlify.com/) en log in
+2. Klik op "New site from Git"
+3. Kies GitHub en selecteer je repository
+4. Configureer de build settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+
+#### 2. Environment Variables Instellen
+
+In je Netlify dashboard:
+
+1. Ga naar **Site settings** → **Environment variables**
+2. Voeg de volgende variabelen toe:
+
+```
+SANITY_PROJECT_ID = je_project_id_hier
+SANITY_DATASET = production
+```
+
+#### 3. Build Settings
+
+Zorg ervoor dat je build settings correct zijn:
+
+- **Build command:** `npm run build`
+- **Publish directory:** `dist`
+- **Node version:** 18 (of hoger)
+
+#### 4. Deploy
+
+Na het instellen van de environment variables:
+
+1. Ga naar **Deploys** tab
+2. Klik op **Trigger deploy** → **Deploy site**
+3. Je site wordt nu gebouwd met de juiste environment variables
+
+### Andere Hosting Opties
+
+Dit project kan ook gehost worden op:
+- [Vercel](https://vercel.com/) - Vergelijkbare setup als Netlify
+- [GitHub Pages](https://pages.github.com/) - Via GitHub Actions
 - Elke andere static hosting service
 
 ## Development Workflow
