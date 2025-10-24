@@ -1,0 +1,68 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "GrowthFactory - Grip op Groei" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Dark mode script - runs before page render to prevent flash -->
+    <script is:inline>
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <!-- Theme toggle script -->
+    <script>
+      function toggleTheme() {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        // Update button text if it exists
+        const button = document.querySelector("[data-theme-toggle]");
+        if (button) {
+          button.textContent = newTheme === "dark" ? "☀️" : "🌙";
+        }
+      }
+
+      // Initialize theme toggle button
+      document.addEventListener("DOMContentLoaded", function () {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (button) {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          button.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+          button.addEventListener("click", toggleTheme);
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  @import "../styles/global.scss";
+</style>

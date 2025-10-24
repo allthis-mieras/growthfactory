@@ -1,0 +1,67 @@
+---
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="secondary">
+  <Container>
+    <div class="testimonial">
+      <blockquote class="testimonial__quote">
+        "Na de samenwerking hadden we eindelijk focus. Meer plezier, meer
+        resultaat. Alles viel op z'n plek."
+      </blockquote>
+      <cite class="testimonial__author">Naam Achternaam - Bedrijf</cite>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .testimonial {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonial__quote {
+    font-size: var(--step-3);
+    font-weight: 500;
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin: 0 0 var(--space-m) 0;
+    font-style: italic;
+    position: relative;
+  }
+
+  .testimonial__quote::before {
+    content: "";
+    font-size: var(--step-5);
+    color: var(--color-primary);
+    position: absolute;
+    top: -var(--space-s);
+    left: -var(--space-s);
+    font-family: serif;
+  }
+
+  .testimonial__quote::after {
+    content: "";
+    font-size: var(--step-5);
+    color: var(--color-primary);
+    position: absolute;
+    bottom: -var(--space-l);
+    right: -var(--space-s);
+    font-family: serif;
+  }
+
+  .testimonial__author {
+    font-size: var(--step-0);
+    color: var(--color-text-secondary);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .testimonial__quote {
+      font-size: var(--step-4);
+    }
+  }
+</style>

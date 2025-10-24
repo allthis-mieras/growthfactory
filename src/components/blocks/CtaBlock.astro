@@ -1,0 +1,142 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "ctaBlock";
+    _key: string;
+    title: string;
+    description?: string;
+    primaryCtaText: string;
+    primaryCtaLink: string;
+    secondaryCtaText?: string;
+    secondaryCtaLink?: string;
+    backgroundStyle?: "default" | "gradient" | "image";
+    backgroundImage?: any;
+  };
+}
+
+const { block } = Astro.props;
+const {
+  title,
+  description,
+  primaryCtaText,
+  primaryCtaLink,
+  secondaryCtaText,
+  secondaryCtaLink,
+  backgroundStyle = "default",
+  backgroundImage,
+} = block;
+
+const backgroundImageProps = backgroundImage
+  ? getSanityImageProps(backgroundImage, { width: 1200, height: 400 })
+  : null;
+---
+
+<Section
+  padding="xl"
+  background={backgroundStyle === "image" ? "image" : "default"}
+  style={backgroundImageProps
+    ? `background-image: url(${backgroundImageProps.src})`
+    : ""}
+>
+  <Container>
+    <div class={`cta cta--${backgroundStyle}`}>
+      <div class="cta__content">
+        <h2 class="cta__title">{title}</h2>
+        {description && <p class="cta__description">{description}</p>}
+
+        <div class="cta__buttons">
+          <Button href={primaryCtaLink} size="lg" variant="primary">
+            {primaryCtaText}
+          </Button>
+          {
+            secondaryCtaText && secondaryCtaLink && (
+              <Button href={secondaryCtaLink} size="lg" variant="secondary">
+                {secondaryCtaText}
+              </Button>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .cta {
+    text-align: center;
+  }
+
+  .cta--gradient {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-accent)
+    );
+    color: white;
+    padding: var(--space-2xl);
+    border-radius: 12px;
+  }
+
+  .cta--image {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .cta__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-m);
+    color: inherit;
+  }
+
+  .cta--gradient .cta__title,
+  .cta--image .cta__title {
+    color: white;
+  }
+
+  .cta__description {
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--space-xl);
+    color: inherit;
+  }
+
+  .cta--gradient .cta__description,
+  .cta--image .cta__description {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .cta__buttons {
+    display: flex;
+    gap: var(--space-m);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    .cta__title {
+      font-size: var(--step-6);
+    }
+
+    .cta__description {
+      font-size: var(--step-2);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta__buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta__buttons > * {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>

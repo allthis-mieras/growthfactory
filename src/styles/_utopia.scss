@@ -1,0 +1,38 @@
+// Utopia Design Tokens
+// Generated with utopia-core-scss
+
+@use 'node_modules/utopia-core-scss/src/utopia.scss' as utopia;
+
+:root {
+    // Type Scale
+    // minWidth: 360, maxWidth: 1440
+    // minFontSize: 12, maxFontSize: 20
+    // minTypeScale: 1.2, maxTypeScale: 1.25
+    // positiveSteps: 8, negativeSteps: 2
+    @include utopia.generateTypeScale(("minWidth": 360,
+            "maxWidth": 1440,
+            "minFontSize": 12,
+            "maxFontSize": 20,
+            "minTypeScale": 1.2,
+            "maxTypeScale": 1.25,
+            "positiveSteps": 8,
+            "negativeSteps": 2,
+            "relativeTo": "viewport",
+            "prefix": "step-",
+        ));
+
+    // Space Scale
+    // Same base config with custom pairs: s-m, s-l, s-xl, xs-m
+    @include utopia.generateSpaceScale(("minWidth": 360,
+            "maxWidth": 1440,
+            "minSize": 12,
+            "maxSize": 20,
+            "positiveSteps": (1.5, 2, 3, 4, 6),
+            "negativeSteps": (0.75, 0.5, 0.25),
+            "customSizes": ("s-m", "s-l", "s-xl", "xs-m"),
+            "usePx": false,
+            "relativeTo": "viewport",
+            "prefix": "space-",
+            "allPairs": false,
+        ));
+}

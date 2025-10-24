@@ -1,0 +1,287 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "listBlock";
+    _key: string;
+    title: string;
+    items: string[];
+    variant?: "recognition" | "features" | "benefits";
+    description?: string;
+    layout?: "list" | "grid" | "cards";
+    ctaText?: string;
+    ctaLink?: string;
+    image?: any;
+    imagePosition?: "left" | "right";
+  };
+}
+
+const { block } = Astro.props;
+const {
+  title,
+  items,
+  variant = "features",
+  description,
+  layout = "grid",
+  ctaText,
+  ctaLink,
+  image,
+  imagePosition = "right",
+} = block;
+
+const imageProps = image
+  ? getSanityImageProps(image, { width: 600, height: 400 })
+  : null;
+---
+
+<Section
+  padding="lg"
+  background={variant === "recognition" ? "secondary" : "default"}
+>
+  <Container>
+    <div class={`list-block list-block--${variant}`}>
+      <div class={`list-block__content list-block__content--${imagePosition}`}>
+        <div class="list-block__text">
+          <h2 class="list-block__title">{title}</h2>
+
+          <ul class={`list-block__items list-block__items--${layout}`}>
+            {
+              items.map((item) => (
+                <li class="list-block__item">
+                  <span class="list-block__icon">✓</span>
+                  <span class="list-block__text">{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          {
+            description && (
+              <div class="list-block__description">
+                <p>{description}</p>
+              </div>
+            )
+          }
+
+          {
+            ctaText && ctaLink && (
+              <div class="list-block__cta">
+                <Button href={ctaLink} size="lg">
+                  {ctaText}
+                </Button>
+              </div>
+            )
+          }
+        </div>
+
+        {
+          imageProps && (
+            <div class="list-block__image">
+              <img
+                src={imageProps.src}
+                alt={imageProps.alt}
+                width={imageProps.width}
+                height={imageProps.height}
+                class="list-block__img"
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .list-block {
+    text-align: left;
+  }
+
+  .list-block__content {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .list-block__content--left {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list-block__content--right {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list-block__content--right .list-block__image {
+    order: 2;
+  }
+
+  .list-block__content--left .list-block__image {
+    order: 1;
+  }
+
+  .list-block__content--left .list-block__text {
+    order: 2;
+  }
+
+  .list-block__title {
+    font-family: var(--font-heading);
+    font-size: var(--step-5);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    color: var(--color-text);
+  }
+
+  .list-block__items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .list-block__items--list {
+    grid-template-columns: 1fr;
+  }
+
+  .list-block__items--grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .list-block__items--cards {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+
+  .list-block__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .list-block__items--grid .list-block__item,
+  .list-block__items--cards .list-block__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .list-block__items--cards .list-block__item:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-hover);
+    transform: translateY(-1px);
+  }
+
+  .list-block__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--step--2);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .list-block__items--grid .list-block__icon,
+  .list-block__items--cards .list-block__icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: var(--step--1);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .list-block__text {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .list-block__description {
+    margin-top: 1.5rem;
+  }
+
+  .list-block__description p {
+    font-family: var(--font-body);
+    font-size: var(--step-1);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .list-block__cta {
+    margin-top: 1.5rem;
+  }
+
+  .list-block__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .list-block__img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Variant-specific styling */
+  .list-block--recognition .list-block__icon {
+    background: #ef4444;
+  }
+
+  .list-block--features .list-block__icon {
+    background: #10b981;
+  }
+
+  .list-block--benefits .list-block__icon {
+    background: #8b5cf6;
+  }
+
+  @media (max-width: 768px) {
+    .list-block__content--left,
+    .list-block__content--right {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .list-block__content--left .list-block__image,
+    .list-block__content--left .list-block__text {
+      order: unset;
+    }
+
+    .list-block__content--right .list-block__image {
+      order: unset;
+    }
+
+    .list-block__items--grid,
+    .list-block__items--cards {
+      grid-template-columns: 1fr;
+    }
+
+    .list-block__title {
+      font-size: var(--step-4);
+    }
+  }
+</style>

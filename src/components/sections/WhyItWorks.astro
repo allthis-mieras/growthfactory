@@ -1,0 +1,89 @@
+---
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="default">
+  <Container>
+    <div class="why-it-works">
+      <h2 class="why-it-works__title">Waarom dit werkt</h2>
+
+      <ul class="why-it-works__list">
+        <li class="why-it-works__item">
+          Bewezen methodiek (De Reis + ODC + AI)
+        </li>
+        <li class="why-it-works__item">
+          Gebaseerd op jouw mensen en hun talenten
+        </li>
+        <li class="why-it-works__item">Snel, praktisch en concreet</li>
+        <li class="why-it-works__item">
+          Rust, grip en tevreden klanten & medewerkers.
+        </li>
+      </ul>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .why-it-works {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .why-it-works__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-l);
+    color: var(--color-text);
+  }
+
+  .why-it-works__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .why-it-works__item {
+    position: relative;
+    padding: var(--space-m);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-text);
+    transition: all var(--transition-fast);
+  }
+
+  .why-it-works__item:hover {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .why-it-works__item::before {
+    content: "★";
+    position: absolute;
+    left: var(--space-s);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-accent);
+    font-weight: bold;
+    font-size: var(--step-1);
+  }
+
+  .why-it-works__item {
+    padding-left: calc(var(--space-s) + var(--space-m));
+  }
+
+  @media (min-width: 768px) {
+    .why-it-works__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-l);
+    }
+  }
+</style>

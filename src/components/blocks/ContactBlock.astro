@@ -1,0 +1,190 @@
+---
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import Button from "../ui/Button.astro";
+
+export interface Props {
+  block: {
+    _type: "contactBlock";
+    _key: string;
+    title: string;
+    subtitle: string;
+    formFields?: Array<{
+      name: string;
+      label: string;
+      type: string;
+      required: boolean;
+    }>;
+  };
+}
+
+const { block } = Astro.props;
+const {
+  title,
+  subtitle,
+  formFields = [
+    { name: "name", label: "Name", type: "text", required: true },
+    { name: "email", label: "Email", type: "email", required: true },
+    { name: "message", label: "Message", type: "textarea", required: true },
+  ],
+} = block;
+---
+
+<Section padding="lg" background="secondary">
+  <Container>
+    <div class="contact">
+      <div class="contact__header">
+        <h2 class="contact__title">{title}</h2>
+        <p class="contact__subtitle">{subtitle}</p>
+      </div>
+
+      <form class="contact__form" id="contact">
+        <div class="contact__form--inline">
+          {
+            formFields.slice(0, 2).map((field) => (
+              <div class="contact__field">
+                <label for={field.name} class="contact__label">
+                  {field.label}
+                  {field.required && <span class="contact__required">*</span>}
+                </label>
+                <input
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  class="contact__input"
+                  required={field.required}
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        {
+          formFields.slice(2).map((field) => (
+            <div class="contact__field">
+              <label for={field.name} class="contact__label">
+                {field.label}
+                {field.required && <span class="contact__required">*</span>}
+              </label>
+              {field.type === "textarea" ? (
+                <textarea
+                  id={field.name}
+                  name={field.name}
+                  class="contact__input contact__textarea"
+                  required={field.required}
+                  rows="4"
+                />
+              ) : (
+                <input
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  class="contact__input"
+                  required={field.required}
+                />
+              )}
+            </div>
+          ))
+        }
+
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          class="contact__submit"
+        >
+          Verstuur bericht
+        </Button>
+      </form>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .contact {
+    text-align: center;
+  }
+
+  .contact__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-m);
+    color: var(--color-text);
+  }
+
+  .contact__subtitle {
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    color: var(--color-text-secondary);
+  }
+
+  .contact__form {
+    display: grid;
+    gap: var(--space-l);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact__field {
+    text-align: left;
+  }
+
+  .contact__form--inline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  @media (max-width: 768px) {
+    .contact__form--inline {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+  }
+
+  .contact__label {
+    display: block;
+    font-size: var(--step-0);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact__required {
+    color: var(--color-primary);
+    margin-left: 2px;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    width: 100%;
+    padding: var(--space-s);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: var(--step-0);
+    font-family: inherit;
+    background: var(--color-bg);
+    color: var(--color-text);
+    transition: border-color var(--transition-fast);
+    box-sizing: border-box;
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .contact__submit {
+    justify-self: center;
+  }
+</style>

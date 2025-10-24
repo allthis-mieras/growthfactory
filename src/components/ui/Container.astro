@@ -1,0 +1,50 @@
+---
+export interface Props {
+  size?: "sm" | "md" | "lg" | "xl";
+  class?: string;
+}
+
+const { size = "lg", class: className = "" } = Astro.props;
+
+const classes = `container container--${size} ${className}`.trim();
+---
+
+<div class={classes}>
+  <slot />
+</div>
+
+<style>
+  .container {
+    /* width: 100%; */
+    margin: 0 auto;
+    padding: 0 var(--space-s);
+  }
+
+  .container--sm {
+    max-width: 640px;
+  }
+
+  .container--md {
+    max-width: 768px;
+  }
+
+  .container--lg {
+    max-width: 1280px;
+  }
+
+  .container--xl {
+    max-width: 1280px;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding: 0 var(--space-m);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding: 0 var(--space-l);
+    }
+  }
+</style>

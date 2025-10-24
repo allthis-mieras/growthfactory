@@ -1,0 +1,238 @@
+---
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "testimonialBlock";
+    _key: string;
+    title?: string;
+    testimonials?: Array<{
+      _id: string;
+      quote: string;
+      author: string;
+      company?: string;
+      role?: string;
+      image?: any;
+      rating?: number;
+    }>;
+    displayMode?: "random" | "all" | "featured";
+    layout?: "single" | "two-column" | "carousel";
+    showRating?: boolean;
+    showImage?: boolean;
+  };
+}
+
+const { block } = Astro.props;
+const {
+  title,
+  testimonials = [],
+  displayMode = "random",
+  layout = "single",
+  showRating = true,
+  showImage = true,
+} = block;
+
+// Filter and select testimonials based on display mode
+let selectedTestimonials = testimonials;
+
+if (displayMode === "featured") {
+  selectedTestimonials = testimonials.filter((t) => t.featured);
+} else if (displayMode === "random" && testimonials.length > 0) {
+  // Select a random testimonial
+  const randomIndex = Math.floor(Math.random() * testimonials.length);
+  selectedTestimonials = [testimonials[randomIndex]];
+}
+
+// If no testimonials selected, show empty state
+if (selectedTestimonials.length === 0) {
+  selectedTestimonials = [
+    {
+      _id: "fallback",
+      quote: "Geen testimonials beschikbaar.",
+      author: "Systeem",
+      company: "GrowthFactory",
+    },
+  ];
+}
+---
+
+<Section padding="lg" background="secondary">
+  <Container>
+    <div class={`testimonials testimonials--${layout}`}>
+      {title && <h2 class="testimonials__title">{title}</h2>}
+
+      <div class={`testimonials__grid testimonials__grid--${layout}`}>
+        {
+          selectedTestimonials.map((testimonial) => {
+            const imageProps =
+              testimonial.image && showImage
+                ? getSanityImageProps(testimonial.image, {
+                    width: 80,
+                    height: 80,
+                  })
+                : null;
+
+            return (
+              <div class="testimonial">
+                <blockquote class="testimonial__quote">
+                  <p>"{testimonial.quote}"</p>
+                </blockquote>
+
+                <div class="testimonial__author">
+                  {imageProps && (
+                    <img
+                      src={imageProps.src}
+                      alt={imageProps.alt}
+                      width={imageProps.width}
+                      height={imageProps.height}
+                      class="testimonial__image"
+                    />
+                  )}
+                  <div class="testimonial__info">
+                    <cite class="testimonial__name">{testimonial.author}</cite>
+                    {testimonial.role && (
+                      <p class="testimonial__role">{testimonial.role}</p>
+                    )}
+                    {testimonial.company && (
+                      <p class="testimonial__company">{testimonial.company}</p>
+                    )}
+                    {testimonial.rating && showRating && (
+                      <div class="testimonial__rating">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <span
+                            class={`star ${i < testimonial.rating ? "star--filled" : ""}`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .testimonials {
+    text-align: center;
+  }
+
+  .testimonials__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-xl);
+    color: var(--color-text);
+  }
+
+  .testimonials__grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .testimonials__grid--single {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonials__grid--two-column {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-2xl);
+  }
+
+  .testimonials__grid--carousel {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonial {
+    text-align: center;
+  }
+
+  .testimonial__quote {
+    margin: 0 0 var(--space-xl) 0;
+    font-size: var(--step-3);
+    font-style: italic;
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text);
+  }
+
+  .testimonial__quote p {
+    margin: 0;
+  }
+
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-m);
+  }
+
+  .testimonial__image {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .testimonial__info {
+    text-align: left;
+  }
+
+  .testimonial__name {
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--color-text);
+    font-style: normal;
+  }
+
+  .testimonial__role {
+    font-size: var(--step-0);
+    color: var(--color-text-secondary);
+    margin: var(--space-xs) 0 0 0;
+    font-weight: 500;
+  }
+
+  .testimonial__company {
+    font-size: var(--step-0);
+    color: var(--color-text-secondary);
+    margin: var(--space-xs) 0 0 0;
+  }
+
+  .testimonial__rating {
+    display: flex;
+    gap: 2px;
+    margin-top: var(--space-xs);
+  }
+
+  .star {
+    color: #ddd;
+    font-size: var(--step-0);
+  }
+
+  .star--filled {
+    color: #ffc107;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials__grid--two-column {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonial__author {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .testimonial__info {
+      text-align: center;
+    }
+  }
+</style>

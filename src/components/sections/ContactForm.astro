@@ -1,0 +1,146 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="secondary" id="contact">
+  <Container>
+    <div class="contact-form">
+      <div class="contact-form__header">
+        <h2 class="contact-form__title">Maak een afspraak.</h2>
+        <p class="contact-form__subtitle">
+          Grip op Groei. In 90 dagen verder dan je nu voor mogelijk houdt.
+        </p>
+      </div>
+
+      <form class="contact-form__form" action="#" method="POST">
+        <div class="contact-form__field">
+          <label for="name" class="contact-form__label">Naam</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="contact-form__input"
+            required
+            placeholder="Je naam"
+          />
+        </div>
+
+        <div class="contact-form__field">
+          <label for="email" class="contact-form__label">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="contact-form__input"
+            required
+            placeholder="je@email.nl"
+          />
+        </div>
+
+        <div class="contact-form__field">
+          <label for="message" class="contact-form__label">Bericht</label>
+          <textarea
+            id="message"
+            name="message"
+            class="contact-form__textarea"
+            rows="5"
+            placeholder="Vertel ons over je situatie..."></textarea>
+        </div>
+
+        <div class="contact-form__submit">
+          <Button type="submit" size="lg">Verstuur</Button>
+        </div>
+
+        <p class="contact-form__privacy">
+          We gaan zorgvuldig met je gegevens om.
+        </p>
+      </form>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-form__header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-form__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-s);
+    color: var(--color-text);
+  }
+
+  .contact-form__subtitle {
+    font-size: var(--step-1);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-base);
+  }
+
+  .contact-form__form {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .contact-form__field {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .contact-form__label {
+    font-size: var(--step-0);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .contact-form__input,
+  .contact-form__textarea {
+    padding: var(--space-s);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--step-0);
+    font-family: inherit;
+    transition: all var(--transition-fast);
+  }
+
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .contact-form__submit {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-s);
+  }
+
+  .contact-form__privacy {
+    text-align: center;
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+    margin-top: var(--space-s);
+  }
+
+  @media (min-width: 768px) {
+    .contact-form__form {
+      gap: var(--space-l);
+    }
+  }
+</style>

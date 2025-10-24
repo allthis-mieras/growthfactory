@@ -1,0 +1,155 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "heroBlock";
+    _key: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    ctaText: string;
+    ctaLink: string;
+    backgroundImage?: any;
+    variant?: "default" | "centered" | "split";
+  };
+}
+
+const { block } = Astro.props;
+const {
+  title,
+  subtitle,
+  description,
+  ctaText,
+  ctaLink,
+  backgroundImage,
+  variant = "default",
+} = block;
+
+const backgroundImageProps = backgroundImage
+  ? getSanityImageProps(backgroundImage, { width: 1200, height: 600 })
+  : null;
+---
+
+<Section
+  padding="xl"
+  background={backgroundImage ? "image" : "default"}
+  style={backgroundImageProps
+    ? `background-image: url(${backgroundImageProps.src})`
+    : ""}
+>
+  <Container>
+    <div class={`hero hero--${variant}`}>
+      <div class="hero__content">
+        <h1 class="hero__title">{title}</h1>
+        <p class="hero__subtitle">{subtitle}</p>
+        <p class="hero__description">
+          {description}
+        </p>
+        <div class="hero__cta">
+          <Button href={ctaLink} size="lg">{ctaText}</Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .hero {
+    text-align: left;
+  }
+
+  .hero--centered {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+  }
+
+  .hero--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+    align-items: center;
+  }
+
+  .hero__content {
+    /* width: 50%; */
+  }
+
+  .hero--centered .hero__content {
+    width: 100%;
+  }
+
+  .hero--split .hero__content {
+    width: 100%;
+  }
+
+  .hero__title {
+    font-family: var(--font-heading);
+    font-size: var(--step-6);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+    color: var(--color-text);
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--step-2);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin: 0 0 1rem 0;
+  }
+
+  .hero__description {
+    font-family: var(--font-body);
+    font-size: var(--step-1);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0 0 2rem 0;
+  }
+
+  .hero__cta {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .hero--centered .hero__cta {
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__title {
+      font-size: var(--step-7);
+    }
+
+    .hero__subtitle {
+      font-size: var(--step-3);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__content {
+      width: 100%;
+    }
+
+    .hero--split {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .hero__title {
+      font-size: var(--step-5);
+    }
+
+    .hero__cta {
+      justify-content: center;
+    }
+  }
+</style>

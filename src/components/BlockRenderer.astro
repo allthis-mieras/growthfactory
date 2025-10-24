@@ -1,0 +1,62 @@
+---
+import HeroBlock from "./blocks/HeroBlock.astro";
+import ListBlock from "./blocks/ListBlock.astro";
+import TestimonialBlock from "./blocks/TestimonialBlock.astro";
+import ProcessBlock from "./blocks/ProcessBlock.astro";
+import TeamBlock from "./blocks/TeamBlock.astro";
+import ContactBlock from "./blocks/ContactBlock.astro";
+import CtaBlock from "./blocks/CtaBlock.astro";
+import ContentBlock from "./blocks/ContentBlock.astro";
+
+export interface Props {
+  block: {
+    _type: string;
+    _key: string;
+    [key: string]: any;
+  };
+}
+
+const { block } = Astro.props;
+
+// Block component mapping
+const blockComponents = {
+  heroBlock: HeroBlock,
+  listBlock: ListBlock,
+  testimonialBlock: TestimonialBlock,
+  processBlock: ProcessBlock,
+  teamBlock: TeamBlock,
+  contactBlock: ContactBlock,
+  ctaBlock: CtaBlock,
+  contentBlock: ContentBlock,
+};
+
+// Get the appropriate component for this block type
+const BlockComponent =
+  blockComponents[block._type as keyof typeof blockComponents];
+
+// If no component found, show error message
+if (!BlockComponent) {
+  console.warn(`Unknown block type: ${block._type}`);
+}
+---
+
+{
+  BlockComponent ? (
+    <BlockComponent block={block} />
+  ) : (
+    <div class="block-error">
+      <p>Unknown block type: {block._type}</p>
+    </div>
+  )
+}
+
+<style>
+  .block-error {
+    padding: var(--space-m);
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 4px;
+    color: #c33;
+    text-align: center;
+  }
+</style>

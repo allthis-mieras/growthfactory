@@ -1,0 +1,86 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  title = "Grip op Groei.",
+  subtitle = "Voor ondernemers die vooruit willen.",
+  description = "In 90 dagen meer resultaat, meer flow en minder gedoe. Met je eigen team, jouw talenten en een concreet plan.",
+  ctaText = "Ik wil graag meer weten",
+  ctaHref = "#contact",
+} = Astro.props;
+---
+
+<Section padding="xl" background="default">
+  <Container>
+    <div class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">{title}</h1>
+        <p class="hero__subtitle">{subtitle}</p>
+        <p class="hero__description">
+          {description}
+        </p>
+        <div class="hero__cta">
+          <Button href={ctaHref} size="lg">{ctaText}</Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .hero {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero__title {
+    font-size: var(--step-6);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--space-s);
+    color: var(--color-text);
+  }
+
+  .hero__subtitle {
+    font-size: var(--step-2);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-m);
+  }
+
+  .hero__description {
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-l);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__title {
+      font-size: var(--step-7);
+    }
+
+    .hero__subtitle {
+      font-size: var(--step-3);
+    }
+  }
+</style>

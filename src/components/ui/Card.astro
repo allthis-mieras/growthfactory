@@ -1,0 +1,42 @@
+---
+export interface Props {
+  padding?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const { padding = "md", class: className = "" } = Astro.props;
+
+const classes = `card card--${padding} ${className}`.trim();
+---
+
+<div class={classes}>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-light);
+  }
+
+  /* Padding variants */
+  .card--sm {
+    padding: var(--space-s);
+  }
+
+  .card--md {
+    padding: var(--space-m);
+  }
+
+  .card--lg {
+    padding: var(--space-l);
+  }
+</style>

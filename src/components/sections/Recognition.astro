@@ -1,0 +1,130 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="secondary">
+  <Container>
+    <div class="recognition">
+      <div class="recognition__content">
+        <h2 class="recognition__title">Herken je dit?</h2>
+
+        <ul class="recognition__list">
+          <li class="recognition__item">Je plannen komen niet af</li>
+          <li class="recognition__item">Samenwerking loopt stroef</li>
+          <li class="recognition__item">
+            Er zit meer in je team dan eruit komt
+          </li>
+          <li class="recognition__item">
+            Je verliest energie in plaats van dat je er energie van krijgt
+          </li>
+        </ul>
+
+        <div class="recognition__solution">
+          <p class="recognition__solution-text">
+            Wij zorgen dat jij weer grip krijgt. Op je bedrijf, je team en je
+            groei.
+          </p>
+          <div class="recognition__cta">
+            <Button href="#contact" size="lg">Ik wil dat ook</Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="recognition__visual">
+        <div class="recognition__circle"></div>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .recognition {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .recognition__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-l);
+    color: var(--color-text);
+  }
+
+  .recognition__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-l) 0;
+  }
+
+  .recognition__item {
+    position: relative;
+    padding-left: var(--space-m);
+    margin-bottom: var(--space-s);
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+  }
+
+  .recognition__item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: var(--step-2);
+  }
+
+  .recognition__solution {
+    margin-top: var(--space-l);
+  }
+
+  .recognition__solution-text {
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-m);
+  }
+
+  .recognition__cta {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .recognition__visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .recognition__circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-accent)
+    );
+    opacity: 0.1;
+  }
+
+  @media (min-width: 768px) {
+    .recognition {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .recognition__visual {
+      justify-content: flex-end;
+    }
+
+    .recognition__circle {
+      width: 300px;
+      height: 300px;
+    }
+  }
+</style>

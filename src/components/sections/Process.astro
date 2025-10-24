@@ -1,0 +1,143 @@
+---
+import Button from "../ui/Button.astro";
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="default">
+  <Container>
+    <div class="process">
+      <div class="process__header">
+        <h2 class="process__title">Zo werkt het in 3 stappen</h2>
+        <p class="process__subtitle">
+          Geen lange trajecten, maar direct toepasbare stappen.
+        </p>
+      </div>
+
+      <div class="process__steps">
+        <Card class="process__step">
+          <div class="process__step-number">1</div>
+          <h3 class="process__step-title">Waar staan we nu?</h3>
+          <p class="process__step-description">
+            Inzicht in je fase en je doelen.
+          </p>
+        </Card>
+
+        <Card class="process__step">
+          <div class="process__step-number">2</div>
+          <h3 class="process__step-title">Waar gaan we heen?</h3>
+          <p class="process__step-description">
+            Concreet en praktisch 90-dagenplan.
+          </p>
+        </Card>
+
+        <Card class="process__step">
+          <div class="process__step-number">3</div>
+          <h3 class="process__step-title">Talentenanalyse</h3>
+          <p class="process__step-description">
+            Ontdek je verborgen potentieel en blinde vlekken.
+          </p>
+        </Card>
+      </div>
+
+      <div class="process__cta">
+        <Button href="#contact" size="lg">Ik wil graag meer weten</Button>
+        <Button href="#werkwijze" variant="outline" size="lg">
+          Verder lezen
+        </Button>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .process {
+    text-align: center;
+  }
+
+  .process__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .process__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-s);
+    color: var(--color-text);
+  }
+
+  .process__subtitle {
+    font-size: var(--step-1);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .process__steps {
+    display: grid;
+    gap: var(--space-l);
+    margin-bottom: var(--space-xl);
+  }
+
+  .process__step {
+    position: relative;
+    text-align: left;
+    transition: all var(--transition-fast);
+  }
+
+  .process__step:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .process__step-number {
+    position: absolute;
+    top: -var(--space-s);
+    left: var(--space-m);
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: var(--step-1);
+  }
+
+  .process__step-title {
+    font-size: var(--step-2);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+    padding-top: var(--space-s);
+  }
+
+  .process__step-description {
+    font-size: var(--step-0);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-base);
+  }
+
+  .process__cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .process__steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .process__cta {
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--space-m);
+    }
+  }
+</style>

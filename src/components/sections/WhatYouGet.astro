@@ -1,0 +1,85 @@
+---
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+---
+
+<Section padding="lg" background="default">
+  <Container>
+    <div class="what-you-get">
+      <h2 class="what-you-get__title">Wat levert het je op?</h2>
+
+      <ul class="what-you-get__list">
+        <li class="what-you-get__item">Een concreet 90-dagenplan</li>
+        <li class="what-you-get__item">Meer resultaat met minder mensen.</li>
+        <li class="what-you-get__item">
+          Betere samenwerking en meer werkplezier
+        </li>
+        <li class="what-you-get__item">Focus op wat écht telt</li>
+      </ul>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .what-you-get {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .what-you-get__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-l);
+    color: var(--color-text);
+  }
+
+  .what-you-get__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .what-you-get__item {
+    position: relative;
+    padding: var(--space-m);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-text);
+    transition: all var(--transition-fast);
+  }
+
+  .what-you-get__item:hover {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .what-you-get__item::before {
+    content: "✓";
+    position: absolute;
+    left: var(--space-s);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-success);
+    font-weight: bold;
+    font-size: var(--step-1);
+  }
+
+  .what-you-get__item {
+    padding-left: calc(var(--space-s) + var(--space-m));
+  }
+
+  @media (min-width: 768px) {
+    .what-you-get__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-l);
+    }
+  }
+</style>

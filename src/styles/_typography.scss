@@ -1,0 +1,163 @@
+// Typography styles using Utopia tokens
+
+// Headings
+h1,
+.h1 {
+    font-family: var(--font-heading);
+    font-size: var(--step-6);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-s);
+}
+
+h2,
+.h2 {
+    font-family: var(--font-heading);
+    font-size: var(--step-5);
+    font-weight: 600;
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-s);
+}
+
+h3,
+.h3 {
+    font-family: var(--font-heading);
+    font-size: var(--step-4);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+h4,
+.h4 {
+    font-family: var(--font-heading);
+    font-size: var(--step-3);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+h5,
+.h5 {
+    font-family: var(--font-heading);
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+h6,
+.h6 {
+    font-family: var(--font-heading);
+    font-size: var(--step-1);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+// Body text
+p {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-s);
+}
+
+// Text sizes
+.text-sm {
+    font-size: var(--step--1);
+}
+
+.text-lg {
+    font-size: var(--step-1);
+}
+
+.text-xl {
+    font-size: var(--step-2);
+}
+
+.text-2xl {
+    font-size: var(--step-3);
+}
+
+// Text colors
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+// Links
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+
+    &:hover {
+        color: var(--color-primary-hover);
+        text-decoration: underline;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+    }
+}
+
+// Lists
+ul,
+ol {
+    margin-bottom: var(--space-s);
+    padding-left: var(--space-m);
+}
+
+li {
+    margin-bottom: var(--space-xs);
+    line-height: var(--line-height-base);
+}
+
+// Blockquotes
+blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--space-s);
+    margin: var(--space-m) 0;
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+// Code
+code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--step--1);
+    background-color: var(--color-bg-secondary);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+}
+
+pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-s);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--space-s);
+
+    code {
+        background: none;
+        padding: 0;
+    }
+}

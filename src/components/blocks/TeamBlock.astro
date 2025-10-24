@@ -1,0 +1,198 @@
+---
+import Button from "../ui/Button.astro";
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "teamBlock";
+    _key: string;
+    title: string;
+    description: string;
+    members: Array<{
+      _id: string;
+      name: string;
+      role: string;
+      bio?: string;
+      image?: any;
+      linkedinUrl?: string;
+    }>;
+    ctaText?: string;
+    ctaLink?: string;
+  };
+}
+
+const { block } = Astro.props;
+const { title, description, members, ctaText, ctaLink } = block;
+---
+
+<Section padding="lg" background="secondary">
+  <Container>
+    <div class="team">
+      <div class="team__header">
+        <h2 class="team__title">{title}</h2>
+        <p class="team__description">{description}</p>
+      </div>
+
+      <div class="team__members">
+        {
+          members.map((member) => {
+            const imageProps = member.image
+              ? getSanityImageProps(member.image, { width: 120, height: 120 })
+              : null;
+            return (
+              <Card class="team__member">
+                <div class="team__member-avatar">
+                  {imageProps ? (
+                    <img
+                      src={imageProps.src}
+                      alt={imageProps.alt}
+                      width={imageProps.width}
+                      height={imageProps.height}
+                      class="team__member-photo"
+                    />
+                  ) : (
+                    <div class="team__member-photo" />
+                  )}
+                </div>
+                <h3 class="team__member-name">{member.name}</h3>
+                <p class="team__member-role">{member.role}</p>
+                {member.bio && <p class="team__member-bio">{member.bio}</p>}
+                {member.linkedinUrl && (
+                  <a
+                    href={member.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="team__member-linkedin"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+              </Card>
+            );
+          })
+        }
+      </div>
+
+      {
+        ctaText && ctaLink && (
+          <div class="team__cta">
+            <Button href={ctaLink} size="lg">
+              {ctaText}
+            </Button>
+          </div>
+        )
+      }
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .team {
+    text-align: center;
+  }
+
+  .team__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .team__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-m);
+    color: var(--color-text);
+  }
+
+  .team__description {
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    color: var(--color-text-secondary);
+  }
+
+  .team__members {
+    display: grid;
+    gap: var(--space-l);
+    margin-bottom: var(--space-xl);
+  }
+
+  .team__member {
+    text-align: center;
+    transition: all var(--transition-fast);
+  }
+
+  .team__member:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .team__member-avatar {
+    margin-bottom: var(--space-m);
+  }
+
+  .team__member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-accent)
+    );
+    margin: 0 auto;
+    opacity: 0.8;
+    object-fit: cover;
+  }
+
+  .team__member-name {
+    font-size: var(--step-2);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+  }
+
+  .team__member-role {
+    font-size: var(--step-0);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-s);
+  }
+
+  .team__member-bio {
+    font-size: var(--step-0);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    margin-bottom: var(--space-s);
+  }
+
+  .team__member-linkedin {
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .team__member-linkedin:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
+
+  .team__cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .team__members {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-xl);
+      max-width: 800px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .team__members {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

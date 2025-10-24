@@ -1,0 +1,175 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Section from "../ui/Section.astro";
+import { getSanityImageProps } from "../../lib/sanity/image";
+
+export interface Props {
+  block: {
+    _type: "processBlock";
+    _key: string;
+    title: string;
+    subtitle: string;
+    steps: Array<{
+      _id: string;
+      number: number;
+      title: string;
+      description: string;
+      icon?: any;
+    }>;
+    layout?: "horizontal" | "vertical" | "timeline";
+  };
+}
+
+const { block } = Astro.props;
+const { title, subtitle, steps, layout = "horizontal" } = block;
+---
+
+<Section padding="lg" background="default">
+  <Container>
+    <div class="process">
+      <div class="process__header">
+        <h2 class="process__title">{title}</h2>
+        <p class="process__subtitle">{subtitle}</p>
+      </div>
+
+      <div class={`process__steps process__steps--${layout}`}>
+        {
+          steps.map((step) => {
+            const iconProps = step.icon
+              ? getSanityImageProps(step.icon, { width: 40, height: 40 })
+              : null;
+            return (
+              <div class="process__step">
+                <div class="process__step-number">{step.number}</div>
+                {iconProps && (
+                  <img
+                    src={iconProps.src}
+                    alt={iconProps.alt}
+                    width={iconProps.width}
+                    height={iconProps.height}
+                    class="process__step-icon"
+                  />
+                )}
+                <h3 class="process__step-title">{step.title}</h3>
+                <p class="process__step-description">{step.description}</p>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .process {
+    text-align: center;
+  }
+
+  .process__header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .process__title {
+    font-size: var(--step-5);
+    font-weight: 600;
+    margin-bottom: var(--space-m);
+    color: var(--color-text);
+  }
+
+  .process__subtitle {
+    font-size: var(--step-1);
+    line-height: var(--line-height-base);
+    color: var(--color-text-secondary);
+  }
+
+  .process__steps {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .process__steps--horizontal {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .process__steps--vertical {
+    grid-template-columns: 1fr;
+  }
+
+  .process__steps--timeline {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
+
+  .process__steps--timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-primary);
+    transform: translateX(-50%);
+  }
+
+  .process__step {
+    position: relative;
+    padding: var(--space-l);
+    background: var(--color-bg-secondary);
+    border-radius: 8px;
+    transition: transform var(--transition-fast);
+  }
+
+  .process__step:hover {
+    transform: translateY(-4px);
+  }
+
+  .process__steps--timeline .process__step {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+  }
+
+  .process__step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: var(--step-1);
+    margin: 0 auto var(--space-m) auto;
+  }
+
+  .process__step-icon {
+    margin: 0 auto var(--space-s) auto;
+    display: block;
+  }
+
+  .process__step-title {
+    font-size: var(--step-2);
+    font-weight: 600;
+    margin-bottom: var(--space-s);
+    color: var(--color-text);
+  }
+
+  .process__step-description {
+    font-size: var(--step-0);
+    line-height: var(--line-height-base);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .process__steps--timeline::before {
+      left: 20px;
+    }
+
+    .process__steps--timeline .process__step {
+      margin-left: 40px;
+    }
+  }
+</style>

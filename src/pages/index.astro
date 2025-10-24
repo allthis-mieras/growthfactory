@@ -1,16 +1,212 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
 
+// Block system imports
+import BlockRenderer from "../components/BlockRenderer.astro";
+
+// Sanity imports
+import { sanityClient } from "../lib/sanity/config";
+import { getHomepageDataQuery } from "../lib/sanity/queries";
+
+// Fetch data from Sanity
+let sanityData = null;
+try {
+  sanityData = await sanityClient.fetch(getHomepageDataQuery);
+} catch (error) {
+  console.warn("Failed to fetch data from Sanity:", error);
+}
+
+// Fallback data for development with blocks
+const fallbackData = {
+  homepage: {
+    pageBlocks: [
+      {
+        _type: "heroBlock",
+        _key: "hero-1",
+        title: "Grip op Groei",
+        subtitle: "Voor ondernemers die vooruit willen",
+        description: "In 90 dagen meer resultaat, meer flow en minder gedoe.",
+        ctaText: "Start vandaag",
+        ctaLink: "#contact",
+        variant: "default",
+      },
+      {
+        _type: "listBlock",
+        _key: "recognition-1",
+        title: "Vertrouwd door",
+        items: ["Tech startups", "Scale-ups", "Family businesses"],
+        variant: "recognition",
+        description: "Wij helpen je groeien",
+        layout: "list",
+        ctaText: "Meer weten",
+        ctaLink: "#contact",
+      },
+      {
+        _type: "listBlock",
+        _key: "whatyouget-1",
+        title: "Wat je krijgt",
+        items: [
+          "Strategische focus",
+          "Operationele efficiency",
+          "Team alignment",
+        ],
+        variant: "features",
+        layout: "grid",
+      },
+      {
+        _type: "testimonialBlock",
+        _key: "testimonial-1",
+        title: "Wat klanten zeggen",
+        testimonials: [
+          {
+            _id: "1",
+            quote:
+              "GrowthFactory heeft ons geholpen om onze groei te versnellen.",
+            author: "Jan de Vries",
+            company: "TechCorp",
+            role: "CEO",
+            rating: 5,
+            featured: true,
+            category: "results",
+          },
+          {
+            _id: "2",
+            quote: "Professionele begeleiding en concrete resultaten.",
+            author: "Sarah Johnson",
+            company: "InnovateCo",
+            role: "Founder",
+            rating: 5,
+            featured: true,
+            category: "service",
+          },
+        ],
+        displayMode: "random",
+        layout: "single",
+        showRating: true,
+        showImage: true,
+      },
+      {
+        _type: "processBlock",
+        _key: "process-1",
+        title: "Ons proces",
+        subtitle: "In 3 stappen naar meer groei",
+        steps: [
+          {
+            _id: "1",
+            number: 1,
+            title: "Analyse",
+            description:
+              "We analyseren je huidige situatie en identificeren kansen.",
+            icon: null,
+          },
+          {
+            _id: "2",
+            number: 2,
+            title: "Strategie",
+            description: "Samen ontwikkelen we een concrete groeistrategie.",
+            icon: null,
+          },
+          {
+            _id: "3",
+            number: 3,
+            title: "Implementatie",
+            description:
+              "We helpen je bij de uitvoering en monitoren de resultaten.",
+            icon: null,
+          },
+        ],
+        layout: "horizontal",
+      },
+      {
+        _type: "teamBlock",
+        _key: "team-1",
+        title: "Ons team",
+        description: "Ervaren professionals die jou helpen groeien.",
+        members: [
+          {
+            _id: "1",
+            name: "Maarten Mieras",
+            role: "Founder & CEO",
+            bio: "Ondernemer met 15+ jaar ervaring in groei en schaal.",
+            image: null,
+            linkedinUrl: "https://linkedin.com/in/maartenmieras",
+            order: 1,
+          },
+        ],
+        ctaText: "Ontmoet ons",
+        ctaLink: "#contact",
+      },
+      {
+        _type: "listBlock",
+        _key: "whyitworks-1",
+        title: "Waarom het werkt",
+        items: [
+          "Bewezen methodieken",
+          "Praktische aanpak",
+          "Persoonlijke begeleiding",
+        ],
+        variant: "benefits",
+        layout: "list",
+      },
+      {
+        _type: "contactBlock",
+        _key: "contact-1",
+        title: "Laten we praten",
+        subtitle: "Klaar om te groeien? Neem contact op.",
+      },
+    ],
+  },
+  teamMembers: [
+    {
+      _id: "1",
+      name: "Maarten Mieras",
+      role: "Founder & CEO",
+      bio: "Ondernemer met 15+ jaar ervaring in groei en schaal.",
+      image: null,
+      linkedinUrl: "https://linkedin.com/in/maartenmieras",
+      order: 1,
+    },
+  ],
+  processSteps: [
+    {
+      _id: "1",
+      number: 1,
+      title: "Analyse",
+      description: "We analyseren je huidige situatie en identificeren kansen.",
+      icon: null,
+    },
+    {
+      _id: "2",
+      number: 2,
+      title: "Strategie",
+      description: "Samen ontwikkelen we een concrete groeistrategie.",
+      icon: null,
+    },
+    {
+      _id: "3",
+      number: 3,
+      title: "Implementatie",
+      description: "We helpen je bij de uitvoering en monitoren de resultaten.",
+      icon: null,
+    },
+  ],
+};
+
+// Use Sanity data if available and has content, otherwise fallback
+const data = sanityData && sanityData.homepage ? sanityData : fallbackData;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="GrowthFactory - Grip op Groei"
+  description="Voor ondernemers die vooruit willen. In 90 dagen meer resultaat, meer flow en minder gedoe."
+>
+  <Header />
+
+  <main>
+    {data.homepage.pageBlocks?.map((block) => <BlockRenderer block={block} />)}
+  </main>
+
+  <Footer />
+</BaseLayout>
