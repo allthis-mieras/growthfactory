@@ -32,3 +32,5 @@ const data = await getPageData("home");
   <Content content={data} />
 </Layout>
 ```
+
+https://www.sanity.io/docs/studio/structure-builder-cheat-sheet
