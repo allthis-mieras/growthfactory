@@ -1,4 +1,7 @@
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('.', import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,7 +11,9 @@ export default defineConfig({
       preprocessorOptions: {
         scss: {
           // Enable SCSS @use syntax
-          api: 'modern-compiler'
+          api: 'modern-compiler',
+          // Astro 7 / Vite 6 lost `node_modules/...` niet meer op vanaf de projectroot.
+          loadPaths: [root],
         }
       }
     }
