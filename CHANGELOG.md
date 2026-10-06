@@ -10,6 +10,12 @@ Categorieën: **Toegevoegd**, **Gewijzigd**, **Opgelost**, **Verwijderd**, **Bev
 ### Onderhoud
 - Gearchiveerd. Het project is niet doorgegaan.
 
+### Gewijzigd
+- Astro bijgewerkt van 5 naar 7.
+
+### Opgelost
+- Utopia-stylesheet wordt weer gevonden na de upgrade naar Astro 7.
+
 ## [2025-10]
 
 ### Toegevoegd

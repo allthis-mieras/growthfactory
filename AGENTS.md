@@ -7,7 +7,7 @@ Instructies voor AI-agents en ontwikkelaars. Lees eerst `README.md` en `CHANGELO
 ## Project
 - Klant: Growth Factory · Bedrijf: All This · SLA: TODO
 - Status: archief, niet doorgegaan (oktober 2026)
-- Stack: Astro 5, Sanity (Studio 3, client 7), Node 22 (zie `.nvmrc`)
+- Stack: Astro 7, Sanity (Studio 3, client 7), Node 22 (zie `.nvmrc`)
 - Sanity: project `86exk9f3`, dataset `production`
 
 ## Werkwijze

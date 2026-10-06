@@ -16,7 +16,7 @@
 
 ## Stack
 
-- Astro 5 · Sanity (`@sanity/client` 7, Studio op Sanity 3) · Node 22 (`.nvmrc`) · static
+- Astro 7 · Sanity (`@sanity/client` 7, Studio op Sanity 3) · Node 22 (`.nvmrc`) · static
 - Styling: SCSS, Utopia fluid type en spacing, CSS custom properties · Fonts: system-ui
 - Animatie: geen
 - Consent: geen · Hosting: Netlify (site onbekend, TODO)
